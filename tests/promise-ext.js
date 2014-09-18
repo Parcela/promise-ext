@@ -15,7 +15,7 @@ describe('Promise ext', function () {
             function(response) {
                 var fulfilled = response.fulfilled,
                     rejected = response.rejected;
-                fulfilled[0].should.be.eql(1);
+                expect(fulfilled[0]).to.eql(1);
                 (rejected[0]===undefined).should.be.true;
                 done();
             }
@@ -38,7 +38,7 @@ describe('Promise ext', function () {
             function(response) {
                 var fulfilled = response.fulfilled,
                     rejected = response.rejected;
-                (fulfilled[0]+fulfilled[1]+fulfilled[2]).should.be.eql(7);
+                expect((fulfilled[0]+fulfilled[1]+fulfilled[2])).to.eql(7);
                 (rejected[0]===undefined).should.be.true;
                 (rejected[1]===undefined).should.be.true;
                 (rejected[2]===undefined).should.be.true;
@@ -64,10 +64,10 @@ describe('Promise ext', function () {
                 var fulfilled = response.fulfilled,
                     rejected = response.rejected;
                 (fulfilled[1]===undefined).should.be.true;
-                (fulfilled[0]+fulfilled[2]).should.be.eql(5);
+                expect((fulfilled[0]+fulfilled[2])).to.eql(5);
                 (rejected[0]===undefined).should.be.true;
                 (rejected[2]===undefined).should.be.true;
-                rejected[1].should.be.eql(8);
+                expect(rejected[1]).to.eql(8);
                 done();
             }
         ).then(
@@ -80,14 +80,14 @@ describe('Promise ext', function () {
         var p1 = function(amount) {
                 return new Promise(function(resolve, reject) {
                     setTimeout(function() {
-                        amount.should.be.eql(1);
+                        expect(amount).to.eql(1);
                         resolve(amount);
                     }, 50);
                 });
             };
         Promise.chainFns(p1.bind(undefined,1)).then(
             function(total) {
-                total.should.be.eql(1);
+                expect(total).to.eql(1);
                 done();
             }
         ).then(
@@ -116,7 +116,7 @@ describe('Promise ext', function () {
 
         Promise.chainFns(a).then(
             function(total) {
-                total.should.be.eql(250);
+                expect(total).to.eql(250);
                 done();
             }
         );
@@ -127,21 +127,21 @@ describe('Promise ext', function () {
         p1 = function(amount) {
             return new Promise(function(resolve, reject) {
                 setTimeout(function() {
-                    amount.should.be.eql(1);
+                    expect(amount).to.eql(1);
                     resolve(amount);
                 }, 50);
             });
         };
         p2 = function(total, amount) {
             var value = total+amount;
-            value.should.be.eql(3);
+            expect(value).to.eql(3);
             return value;
         };
         p3 = function(total, amount) {
             return new Promise(function(resolve, reject) {
                 setTimeout(function() {
                     var value = total+amount;
-                    value.should.be.eql(7);
+                    expect(value).to.eql(7);
                     resolve(value);
                 }, 50);
             });
@@ -151,7 +151,7 @@ describe('Promise ext', function () {
         a.push(p3.bind(undefined, 4));
         Promise.chainFns(a).then(
             function(total) {
-                total.should.be.eql(7);
+                expect(total).to.eql(7);
                 done();
             }
         ).then(
@@ -165,14 +165,14 @@ describe('Promise ext', function () {
         p1 = function(amount) {
             return new Promise(function(resolve, reject) {
                 setTimeout(function() {
-                    amount.should.be.eql(1);
+                    expect(amount).to.eql(1);
                     resolve(amount);
                 }, 50);
             });
         };
         p2 = function(total, amount) {
             var value = total+amount;
-            value.should.be.eql(3);
+            expect(value).to.eql(3);
             return value;
         };
         p3 = function(total, amount) {
@@ -180,7 +180,7 @@ describe('Promise ext', function () {
                 setTimeout(function() {
                     var value = total+amount;
                     p3Invoked = true;
-                    value.should.be.eql(7);
+                    expect(value).to.eql(7);
                     resolve(value);
                 }, 50);
             });
@@ -194,7 +194,7 @@ describe('Promise ext', function () {
                 done(new Error('chainFn resolved when it should have been rejected'));
             },
             function(total) {
-                total.should.be.eql(3);
+                expect(total).to.eql(3);
             }
         );
         setTimeout(function() {
@@ -208,21 +208,21 @@ describe('Promise ext', function () {
         p1 = function(amount) {
             return new Promise(function(resolve, reject) {
                 setTimeout(function() {
-                    amount.should.be.eql(1);
+                    expect(amount).to.eql(1);
                     reject(amount);
                 }, 50);
             });
         };
         p2 = function(total, amount) {
             var value = total+amount;
-            value.should.be.eql(3);
+            expect(value).to.eql(3);
             return value;
         };
         p3 = function(total, amount) {
             return new Promise(function(resolve, reject) {
                 setTimeout(function() {
                     var value = total+amount;
-                    value.should.be.eql(7);
+                    expect(value).to.eql(7);
                     resolve(value);
                 }, 50);
             });
@@ -232,7 +232,7 @@ describe('Promise ext', function () {
         a.push(p3.bind(undefined, 4));
         Promise.chainFns(a, true).then(
             function(total) {
-                total.should.be.eql(7);
+                expect(total).to.eql(7);
                 done();
             }
         ).then(
@@ -312,7 +312,7 @@ describe('Promise ext', function () {
             promise.callback(2);
         }, 50);
         setTimeout(function() {
-            count.should.be.eql(3);
+            expect(count).to.eql(3);
         }, 75);
         setTimeout(function() {
             promise.fulfill();
